@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class terminalCricket {
+public class cliCricket {
     static String usr="Player"; // user name
     static int score; // user score
     static int sysScore; // computer score

@@ -1,8 +1,8 @@
-// Crazy Mode..
+// Valid Numbers = 1 to 6
 
 import java.util.Scanner;
 
-public class terminalCricketVar2 {
+public class cliCricketVar3 {
     static String usr="Player"; // user name
     static int score; // user score
     static int sysScore; // computer score
@@ -11,7 +11,8 @@ public class terminalCricketVar2 {
     static int sovScore, sysSovScore, wick;
     static int choice; // 1 = batting, 2 = balling
     static final int tossMin=1, tossMax=2; // for toss/flick/choice
-    static final int bMin=1, bMax=10; // for sysn
+    static final int bMin=1, bMax=6; // for sysn
+    static int mode;
 
     public static void main(String[] args) {
         Scanner main = new Scanner(System.in);
@@ -20,6 +21,22 @@ public class terminalCricketVar2 {
         print("Enter player name: ");
         usr = main.next();
         print("Hello " + usr + "!\n");
+
+        print("Game Modes: [0 = Normal, 1 = Crazy] \n");
+        print("Select Mode: ");
+        mode = main.nextInt();
+
+        while(mode > 1 || mode < 0){
+            print("Invalid Input.. \n");
+            print("Select Mode: ");
+            mode = main.nextInt();
+        }
+
+        if(mode == 0) {
+            print("Normal Mode Selected.. \n");
+        } else if(mode == 1) {
+            print("Crazy Mode Selected.. \n");
+        }
 
         toss();
         while(Toss > 2 || Toss < 1){ // Invalid Input
@@ -38,20 +55,20 @@ public class terminalCricketVar2 {
 
         // batting first
         if(choice == 1) {
-            print("You're batting first.. \nEnter numbers from 1 to 10.. \n");
-            print("[Note: Entering no. < 1 or > 10 = FLICK..] \n");
+            print("You're batting first.. \nEnter numbers from 1 to 6.. \n");
+            print("[Note: Entering no. < 1 or > 6 = FLICK..] \n");
             batting(1);
-            print("You're now balling.. \nEnter numbers from 1 to 10.. \n");
-            print("[Note: Entering no. < 1 or > 10 = REBALL..] \n");
+            print("You're now balling.. \nEnter numbers from 1 to 6.. \n");
+            print("[Note: Entering no. < 1 or > 6 = REBALL..] \n");
             balling(2);
         }
         // balling first
         else {
-            print("You're balling first.. \nEnter numbers from 1 to 10.. \n");
-            print("[Note: Entering no. < 1 or > 10 = REBALL..] \n");
+            print("You're balling first.. \nEnter numbers from 1 to 6.. \n");
+            print("[Note: Entering no. < 1 or > 6 = REBALL..] \n");
             balling(1);
-            print("You're now batting.. \nEnter numbers from 1 to 10.. \n");
-            print("[Note: Entering no. < 1 or > 10 = FLICK..] \n");
+            print("You're now batting.. \nEnter numbers from 1 to 6.. \n");
+            print("[Note: Entering no. < 1 or > 6 = FLICK..] \n");
             batting(2);
         }
 
@@ -70,7 +87,7 @@ public class terminalCricketVar2 {
     public static void loading() {
         print("Loading.. ");
         for(int i=0; i<=100; i+=10) {
-            print(i + "%", 15);
+            print(i + "%", 30);
             if(i<10){
                 print("\b\b");
             } else {
@@ -109,9 +126,9 @@ public class terminalCricketVar2 {
             print("Computer: " + sysn + "\n", 10);
             
             // Flick
-            if(n < 1 || n > 10) {
+            if(n < 1 || n > 6) {
             score -= n;
-            while(n < 1 || n > 10){
+            while(n < 1 || n > 6){
                 print("Its a Flick.. \nEnter 1 or 2 for Flick: ");
                 Flick = b1.nextInt();
                 sysFlick = (int)Math.floor(Math.random()*(tossMax-tossMin+1)+tossMin);
@@ -130,21 +147,31 @@ public class terminalCricketVar2 {
                 }
             }}
 
-            // Check if out
-            if(n+1 == sysn || n-1 == sysn){
-                score -= n;
-                print("You're out.. \n");
+            if(x == 2 && score > sysScore) { // only if batting second
                 print("Your Score: " + score + "\n");
                 break;
-            } else if(x == 2 && score > sysScore) { // only if batting second
-                print("Your Score: " + score + "\n");
-                break;
-            } 
-            
-            if(n == sysn) {
-                score -=n;
-                score += n*n;
-                print(n*n + " has been added to the score! \n");
+            }
+
+            if(mode == 0) {
+                if(n == sysn){
+                    score -= n;
+                    print("You're out.. \n");
+                    print("Your Score: " + score + "\n");
+                    break;
+                }
+            } else if(mode == 1) {
+                if(n+1 == sysn || n-1 == sysn){
+                    score -= n;
+                    print("You're out.. \n");
+                    print("Your Score: " + score + "\n");
+                    break;
+                }
+               
+                if(n == sysn) {
+                    score -=n;
+                    score += n*n;
+                    print(n*n + " (" + n + "^2)" + " has been added to the score! \n");
+                }
             }
         }
     }
@@ -157,7 +184,7 @@ public class terminalCricketVar2 {
             sysn = (int)Math.floor(Math.random()*(bMax-bMin+1)+bMin);
             
             // reball
-            while(n < 1 || n > 10){
+            while(n < 1 || n > 6){
                 print("Invalid Input.. \nReball.. \n");
                 print(usr + ": ", 10);
                 n = b2.nextInt();
@@ -167,21 +194,31 @@ public class terminalCricketVar2 {
             sysScore += sysn;
             print("Computer: " + sysn + "\n", 10);
             
-            // Check if out:
-            if(n+1 == sysn || n-1 == sysn){
-                sysScore -= sysn;
-                print("The computer is out.. \n");
-                print("The Computer's Score: " + sysScore + "\n");
-                break;
-            } else if(y == 2 && sysScore > score) { // only if balling second
+            if(y == 2 && sysScore > score) { // only if balling second
                 print("The Computer's Score: " + sysScore + "\n");
                 break;
             }
 
-            if(n == sysn) {
-                score -=sysn;
-                score += sysn*sysn;
-                print(sysn*sysn + " has been added to the score! \n");
+            if(mode == 0) {
+                if(n == sysn){
+                    sysScore -= sysn;
+                    print("The computer is out.. \n");
+                    print("The Computer's Score: " + sysScore + "\n");
+                    break;
+                }
+            } else if(mode == 1) {
+                if(n+1 == sysn || n-1 == sysn){
+                    sysScore -= sysn;
+                    print("The computer is out.. \n");
+                    print("The Computer's Score: " + sysScore + "\n");
+                    break;
+                }
+    
+                if(n == sysn) {
+                    score -=sysn;
+                    score += sysn*sysn;
+                    print(sysn*sysn + " (" + sysn + "^2)" + " has been added to the score! \n");
+                }
             }
         }
     }
@@ -206,9 +243,9 @@ public class terminalCricketVar2 {
             print("Computer: " + sysn + "\n", 10);
 
             // Flick
-            if(n < 1 || n > 10) {
+            if(n < 1 || n > 6) {
             sovScore -= n;
-            while(n < 1 || n > 10){
+            while(n < 1 || n > 6){
                 print("Its a Flick.. \nEnter 1 or 2 for Flick: ");
                 Flick = sov.nextInt();
                 sysFlick = (int)Math.floor(Math.random()*(tossMax-tossMin+1)+tossMin);
@@ -221,24 +258,39 @@ public class terminalCricketVar2 {
                     break outer;
                 }
             }}
-
-            if((n+1 == sysn || n-1 == sysn) && (wick == 2)){
-                sovScore -= n;
-                wick -= 1;
-                print("You've lost a wicket! \n");
-                print("Remaining Wickets: " + wick + "\n");
-                print("Your Score: " + sovScore + "\n");
-            } else if((n+1 == sysn || n-1 == sysn) && (wick == 1)){
-                sovScore -= n;
-                print("You're out! \n");
-                print("Your Score: " + sovScore + "\n");
-                break;
-            }
-
-            if(n == sysn) {
-                sovScore -=n;
-                sovScore += n*n;
-                print(n*n + " has been added to the score! \n");
+            
+            if(mode == 0) {
+                if(n == sysn && wick == 2){
+                    sovScore -= n;
+                    wick -= 1;
+                    print("You've lost a wicket! \n");
+                    print("Remaining Wickets: " + wick + "\n");
+                    print("Your Score: " + sovScore + "\n");
+                } else if(n == sysn && wick == 1){
+                    sovScore -= n;
+                    print("You're out! \n");
+                    print("Your Score: " + sovScore + "\n");
+                    break;
+                }
+            } else if(mode == 1) {
+                if((n+1 == sysn || n-1 == sysn) && (wick == 2)){
+                    sovScore -= n;
+                    wick -= 1;
+                    print("You've lost a wicket! \n");
+                    print("Remaining Wickets: " + wick + "\n");
+                    print("Your Score: " + sovScore + "\n");
+                } else if((n+1 == sysn || n-1 == sysn) && (wick == 1)){
+                    sovScore -= n;
+                    print("You're out! \n");
+                    print("Your Score: " + sovScore + "\n");
+                    break;
+                }
+    
+                if(n == sysn) {
+                    sovScore -=n;
+                    sovScore += n*n;
+                    print(n*n + " (" + n + "^2)" + " has been added to the score! \n");
+                }
             }
         }
 
@@ -255,34 +307,52 @@ public class terminalCricketVar2 {
             print("Computer: " + sysn + "\n", 10);
 
             // reball
-            while(n < 1 || n > 10){
+            while(n < 1 || n > 6){
                 print("Invalid Input.. \n");
                 print(usr + ": ", 10);
                 n = sov.nextInt();
                 sysn = (int)Math.floor(Math.random()*(bMax-bMin+1)+bMin);
             }
-
-            if((n+1 == sysn || n-1 == sysn) && (wick == 2)){
-                sovScore -= n;
-                wick -= 1;
-                print("The computer lost a wicket! \n");
-                print("Remaining Wickets: " + wick + "\n");
-                print("The computer's Score: " + sysSovScore + "\n");
-            } else if((n+1 == sysn || n-1 == sysn) && (wick == 1)){
-                sovScore -= n;
-                print("The computer is out! \n");
-                print("The computer's Score: " + sysSovScore + "\n");
-            } else if(sysSovScore > sovScore) {
-                wick = 0;
-                print("The Computer's Score: " + sysSovScore + "\n");
-                print("You've lost the game.. L \n");
-                System.exit(0);
-            }
-
-            if(n == sysn) {
-                sysSovScore -=sysn;
-                sysSovScore += sysn*sysn;
-                print(sysn*sysn + " has been added to the score! \n");
+            if(mode == 0) {
+                if(n == sysn && wick == 2){
+                    sovScore -= n;
+                    wick -= 1;
+                    print("The computer lost a wicket! \n");
+                    print("Remaining Wickets: " + wick + "\n");
+                    print("The computer's Score: " + sysSovScore + "\n");
+                } else if(n == sysn && wick == 1){
+                    sovScore -= n;
+                    print("The computer is out! \n");
+                    print("The computer's Score: " + sysSovScore + "\n");
+                } else if(sysSovScore > sovScore) {
+                    wick = 0;
+                    print("The Computer's Score: " + sysSovScore + "\n");
+                    print("You've lost the game.. L \n");
+                    System.exit(0);
+                }
+            } else if(mode == 1) {
+                if((n+1 == sysn || n-1 == sysn) && (wick == 2)){
+                    sovScore -= n;
+                    wick -= 1;
+                    print("The computer lost a wicket! \n");
+                    print("Remaining Wickets: " + wick + "\n");
+                    print("The computer's Score: " + sysSovScore + "\n");
+                } else if((n+1 == sysn || n-1 == sysn) && (wick == 1)){
+                    sovScore -= n;
+                    print("The computer is out! \n");
+                    print("The computer's Score: " + sysSovScore + "\n");
+                } else if(sysSovScore > sovScore) {
+                    wick = 0;
+                    print("The Computer's Score: " + sysSovScore + "\n");
+                    print("You've lost the game.. L \n");
+                    System.exit(0);
+                }
+    
+                if(n == sysn) {
+                    sysSovScore -=sysn;
+                    sysSovScore += sysn*sysn;
+                    print(sysn*sysn + " (" + sysn + "^2)" + " has been added to the score! \n");
+                }
             }
         }
 

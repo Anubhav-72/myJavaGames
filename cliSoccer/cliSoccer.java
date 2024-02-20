@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class terminalSoccer {
+public class cliSoccer {
     static String usr="Player";
     static boolean ball=true;
     static int tpass, pass;

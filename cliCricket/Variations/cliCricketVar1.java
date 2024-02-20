@@ -2,7 +2,7 @@
 
 import java.util.Scanner;
 
-public class terminalCricketVar1 {
+public class cliCricketVar1 {
     static String usr="Player"; // user name
     static int score; // user score
     static int sysScore; // computer score
