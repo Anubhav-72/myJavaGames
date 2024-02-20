@@ -1,5 +1,3 @@
-// Under Development..
-
 import java.util.Scanner;
 
 public class cliSoccer {
@@ -11,7 +9,7 @@ public class cliSoccer {
 
     public static void main(String[] args) {
         Scanner main = new Scanner(System.in);
-        print("Welcome! \n");
+        print("Welcome to cliSoccer! \n");
         print("Enter player name: ");
         usr = main.next();
         print("Hello " + usr + "!\n");

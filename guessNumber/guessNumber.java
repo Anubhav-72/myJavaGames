@@ -1,10 +1,38 @@
 import java.util.Scanner;
 
 public class guessNumber {
+    static int guess=1;
+    static int n, sysn;
+    
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        //loading();
 
-        loading();
+        print("Welcome to Guess_The_Number! \n");
+
+        print("I'm thinking of a number b/w 1 & 10. \n");
+        print("Guess the number! \n");
+        print("You've got 3 tries.. \n");
+        print("Enter -1 to quit the game.. \n");
+
+        while(n!=-1) {
+            sysn = (int)Math.floor(Math.random()*(10-1+1)+1);
+            while(guess!=4 && n!=-1) {
+                print("Guess " + guess + ": ");
+                n = sc.nextInt();
+                guess++;
+
+                if(n==sysn) {
+                    print("Yup.. its " + n + ".. GG! \n");
+                    break;
+                } else if(n!=sysn && n!=-1) {
+                    print("Incorrect.. \n");
+                }
+            } if(n!=-1) {
+                print("New Game.. \n");
+                guess=1;
+            }
+        }
     }
 
     public static void print(String t, Integer...n) {

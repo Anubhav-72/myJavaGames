@@ -15,7 +15,7 @@ public class cliCricket {
     public static void main(String[] args) {
         Scanner main = new Scanner(System.in);
         loading();
-        print("Welcome! \n");
+        print("Welcome to C.L.I. Cricket! \n");
         print("Enter player name: ");
         usr = main.next();
         print("Hello " + usr + "!\n"); // Greetings
